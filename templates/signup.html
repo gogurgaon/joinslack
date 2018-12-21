@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Join {{.}}</title>
+    <style>
+    body {margin:0;font-family: 'Roboto', sans-serif;}
+    .h-w {width: 100vw;display: flex;flex-direction: column;align-items: center;}
+    .slack {width: 10vw;height: 10vw;}
+    .gp-name {color:#b97b46}
+    .f{display: flex;width: 100vw;flex-direction: column;align-items: center;}
+    .f-g{margin: 1vw;display: flex;flex-direction: column;}
+    .f-l{margin-bottom: 0.3vw;}
+    .f-i{border-radius: 0.3vw;border: solid 0.1vw;width: 20vw;font-size: 1.4vw;}
+    .f-s{border-radius: 0.3vw;font-size: 1.4vw;cursor: pointer;}
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+    <section class="h-w">
+        <h1 class="h1">Join <span class="gp-name">{{.}}</span></h1>
+        <img src="/assets/slack.png" alt="Slack Icon" class="slack">
+    </section>
+    <section class="f-w">
+        <form action="/signup" class="f">
+            <div class="f-g">
+                <label for="name" class="f-l">Full Name</label>
+                <input type="text" id="name" class="f-i" name="display-name">
+            </div>
+            <div class="f-g">
+                <label for="email" class="f-l">Email</label>
+                <input type="email" id="email" class="f-i" name="email">
+            </div>
+            <button type="submit" class="f-s">Get Invite</button>
+        </form>
+    </section>
+</body>
+</html>

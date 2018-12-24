@@ -12,4 +12,7 @@
 *.out
 
 # Config file
-conf.json
+config.json
+
+vendor
+joinslack

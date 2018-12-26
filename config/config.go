@@ -33,6 +33,9 @@ var WORKSPACE = flag.String("workspace", "testingdevgroup", "name of the workspa
 //WORKSPACENAME is the name of the workspace to be used as display name
 var WORKSPACENAME = flag.String("workspace-name", "Working Test Group", "display name of the workspace")
 
+//WORKSPACELOGO is the url pointing towards the logo of the workspace team
+var WORKSPACELOGO = flag.String("workspace-logo-url", "https://avatars3.githubusercontent.com/u/45892404?s=200&v=4", "url pointing to the default logo for your team")
+
 //INVITEURLTEMPLATE is the url template to be hit for sending out url to join the slack workspace.
 //It is a text template.
 var INVITEURLTEMPLATE = template.Must(template.New("invite-url").Parse("https://{{.}}.slack.com/api/users.admin.invite"))
@@ -60,11 +63,12 @@ var TEAMAPIURL = ""
 //Config has the basic config structure required by the application.
 //config file however will have priority over Command line args
 type Config struct {
-	Port      int    //Port of the application
-	Static    string //Static files location
-	Workspace string //Workspace is the name of the workspace
-	InviteURL string //InviteUrl is the url to be used for inviting ther users
-	Token     string //Token for the application
+	Port          int    //Port of the application
+	Static        string //Static files location
+	Workspace     string //Workspace is the name of the workspace
+	InviteURL     string //InviteUrl is the url to be used for inviting ther users
+	Token         string //Token for the application
+	WorkspaceLogo string //WorkspaceLogo is the url pointing towards the workspace logo
 }
 
 //LoadConfig will load the configuratoions required by the application
@@ -118,8 +122,14 @@ func loadConfigFile() {
 		*WORKSPACE = config.Workspace
 	}
 
+	//Checking whether the workspace subdomain name is empty or not
 	if len(*WORKSPACE) == 0 {
 		log.Fatal("Couldn't find the workspace id. Please provide it through config file or command line options")
+	}
+
+	//Workspace logo
+	if len(config.WorkspaceLogo) != 0 {
+		*WORKSPACELOGO = config.WorkspaceLogo
 	}
 
 	//invite url

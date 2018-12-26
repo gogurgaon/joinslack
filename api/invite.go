@@ -26,7 +26,10 @@ func SignupPage(res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Println("Error while loading the signup template file", err.Error())
 	}
-	err = te.Execute(res, *config.WORKSPACENAME) // merge.
+	err = te.Execute(res, struct {
+		Workspace     string
+		WorkspaceLogo string
+	}{*config.WORKSPACENAME, *config.WORKSPACELOGO}) // merge.
 	if err != nil {
 		log.Println("Error while executing the signup template", err.Error())
 	}
@@ -36,7 +39,7 @@ func SignupPage(res http.ResponseWriter, req *http.Request) {
 func Signup(res http.ResponseWriter, req *http.Request) {
 	/*
 	 * Then we will parse the template for thank you page
-	 * We will parse the email and the user's full name
+	 * We will parse the email
 	 * Then we will use the slack api to invite the user
 	 * Will return the response as the template page
 	 */
@@ -47,11 +50,10 @@ func Signup(res http.ResponseWriter, req *http.Request) {
 		log.Println("Error while loading the thanks template file", err.Error())
 	}
 
-	//parsing the user's full name and email
+	//parsing the user's email
 	email := req.PostFormValue("email")
-	name := req.PostFormValue("name")
-	if len(email) == 0 || len(name) == 0 {
-		ErrorResponse(res, errors.New("Couldn't find the email and full name"))
+	if len(email) == 0 {
+		ErrorResponse(res, errors.New("Couldn't find the email"))
 		return
 	}
 
@@ -64,11 +66,13 @@ func Signup(res http.ResponseWriter, req *http.Request) {
 
 	//finally giving out the response template
 	err = te.Execute(res, struct {
-		Workspace string
-		Message   string
+		Workspace     string
+		Message       string
+		WorkspaceLogo string
 	}{
 		*config.WORKSPACENAME,
 		"Thanks for joining " + *config.WORKSPACENAME + ". Check your email for the invite",
+		*config.WORKSPACELOGO,
 	}) // merge.
 	if err != nil {
 		log.Println("Error while executing the thanks template", err.Error())
@@ -87,7 +91,10 @@ func ErrorResponse(res http.ResponseWriter, er error) {
 	if err != nil {
 		log.Println("Error while loading the error template file", err.Error())
 	}
-	err = te.Execute(res, er.Error()) // merge.
+	err = te.Execute(res, struct {
+		Error         string
+		WorkspaceLogo string
+	}{er.Error(), *config.WORKSPACELOGO}) // merge.
 	if err != nil {
 		log.Println("Error while executing the error template", err.Error())
 	}

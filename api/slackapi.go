@@ -53,8 +53,8 @@ func Invite(email string) error {
 	})
 	if err != nil {
 		//error while hitting the slack invite api
-		log.Println("Error while sending invite")
-		return err
+		log.Println("Error while sending invite", err.Error())
+		return errors.New("Server couldn't connect to the slack api")
 	}
 
 	//processing the response

@@ -28,3 +28,14 @@ These configurations can also be set from command line.
 *   Static -   Relative directory where the static asset files are kept
 *   Port - Port on which application has to run
 *   ConfigFile - Relative location of the config file
+
+An example configuration looks like this :-
+
+```json
+{
+	"Port": 9090,
+	"Workspace": "gogurgaon",
+	"WorkspaceName": "Gurgaon Golang Meetup",
+	"Token": "2349d3bn90jkkasd9034rj-not-anactualtoken"
+}
+```

@@ -66,6 +66,7 @@ type Config struct {
 	Port          int    //Port of the application
 	Static        string //Static files location
 	Workspace     string //Workspace is the name of the workspace
+	WorkspaceName string //WorkspaceName is the display name of the workspace
 	InviteURL     string //InviteUrl is the url to be used for inviting ther users
 	Token         string //Token for the application
 	WorkspaceLogo string //WorkspaceLogo is the url pointing towards the workspace logo
@@ -120,6 +121,11 @@ func loadConfigFile() {
 	//workspace
 	if len(config.Workspace) != 0 {
 		*WORKSPACE = config.Workspace
+	}
+
+	//workspace name
+	if len(config.WorkspaceName) != 0 {
+		*WORKSPACENAME = config.WorkspaceName
 	}
 
 	//Checking whether the workspace subdomain name is empty or not

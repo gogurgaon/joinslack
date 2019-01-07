@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -91,6 +92,7 @@ func loadConfigFile() {
 	 * Opening the config file
 	 * Then we will decode the config file
 	 * If the command line flags are not empty update them with config
+	 * Environment variables get more priority over other methods with deployment in mind
 	 */
 	//Loading the config file
 	file, err := os.Open(*CONFIGFILEPATH)
@@ -112,20 +114,36 @@ func loadConfigFile() {
 	if config.Port != 0 {
 		*PORT = config.Port
 	}
+	if len(os.Getenv("PORT")) != 0 {
+		p, err := strconv.Atoi(os.Getenv("PORT"))
+		if err != nil {
+			log.Fatal("Couldn't convert the port to an integer", err.Error())
+		}
+		*PORT = p
+	}
 
 	//static
 	if len(config.Static) != 0 {
 		*STATIC = config.Static
+	}
+	if len(os.Getenv("STATIC")) != 0 {
+		*STATIC = os.Getenv("STATIC")
 	}
 
 	//workspace
 	if len(config.Workspace) != 0 {
 		*WORKSPACE = config.Workspace
 	}
+	if len(os.Getenv("WORKSPACE")) != 0 {
+		*WORKSPACE = os.Getenv("WORKSPACE")
+	}
 
 	//workspace name
 	if len(config.WorkspaceName) != 0 {
 		*WORKSPACENAME = config.WorkspaceName
+	}
+	if len(os.Getenv("WORKSPACENAME")) != 0 {
+		*WORKSPACENAME = os.Getenv("WORKSPACENAME")
 	}
 
 	//Checking whether the workspace subdomain name is empty or not
@@ -137,10 +155,16 @@ func loadConfigFile() {
 	if len(config.WorkspaceLogo) != 0 {
 		*WORKSPACELOGO = config.WorkspaceLogo
 	}
+	if len(os.Getenv("WORKSPACELOGO")) != 0 {
+		*WORKSPACELOGO = os.Getenv("WORKSPACELOGO")
+	}
 
 	//invite url
 	if len(config.InviteURL) != 0 {
 		*INVITEURL = config.InviteURL
+	}
+	if len(os.Getenv("INVITEURL")) != 0 {
+		*INVITEURL = os.Getenv("INVITEURL")
 	}
 
 	//if workspace is not empty we will use the template to set invite url
@@ -154,6 +178,9 @@ func loadConfigFile() {
 	//token
 	if len(config.Token) != 0 {
 		*TOKEN = config.Token
+	}
+	if len(os.Getenv("TOKEN")) != 0 {
+		*TOKEN = os.Getenv("TOKEN")
 	}
 
 	//verifying whether there exist a token

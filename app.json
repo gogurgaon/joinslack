@@ -1,0 +1,26 @@
+{
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/go"
+        }
+    ],
+    "env": {
+        "PORT": {
+            "required": true
+        },
+        "TOKEN": {
+            "required": true
+        },
+        "WORKSPACE": {
+            "required": true
+        },
+        "WORKSPACENAME": {
+            "required": true
+        }
+    },
+    "formation": {},
+    "name": "joinslack",
+    "scripts": {},
+    "stack": "heroku-18"
+}

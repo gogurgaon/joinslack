@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gogurgaon/joinslack/api"
-	"github.com/gogurgaon/joinslack/config"
+	"github.com/melvinodsa/joinslack/api"
+	"github.com/melvinodsa/joinslack/config"
 )
 
 func main() {

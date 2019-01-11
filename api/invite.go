@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gogurgaon/joinslack/config"
+	"github.com/melvinodsa/joinslack/config"
 )
 
 /*

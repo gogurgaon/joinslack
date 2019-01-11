@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/gogurgaon/joinslack/config"
+	"github.com/melvinodsa/joinslack/config"
 )
 
 /*

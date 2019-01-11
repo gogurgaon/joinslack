@@ -1,5 +1,5 @@
 [metadata.heroku]
-  root-package = "github.com/heroku/go-getting-started"
+  root-package = "github.com/melvinodsa/joinslack"
   go-version = "1.11.1"
   install = [ "./..." ]
 

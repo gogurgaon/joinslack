@@ -18,7 +18,7 @@ import (
  */
 
 //PORT for the application. One can provide the port through cmd argument flags
-var PORT = flag.Int("port", 80, "port for the chat application")
+var PORT = flag.Int("port", 9000, "port for the chat application")
 
 //STATIC is the static assets directory for the application.
 //By default it is the one specified by the assets directory. If developer want to have
@@ -89,12 +89,54 @@ func LoadConfig() {
 
 func loadConfigFile() {
 	/*
+	 * Loading the configs from environment variable
+	 * Environment variables get more priority over other methods with deployment in mind
 	 * Opening the config file
 	 * Then we will decode the config file
 	 * If the command line flags are not empty update them with config
-	 * Environment variables get more priority over other methods with deployment in mind
 	 */
 	//Loading the config file
+
+	//configuring the variables from  from os environment variables
+	//port
+	if len(os.Getenv("PORT")) != 0 {
+		p, err := strconv.Atoi(os.Getenv("PORT"))
+		if err != nil {
+			log.Fatal("Couldn't convert the port to an integer", err.Error())
+		}
+		*PORT = p
+	}
+
+	//static assets
+	if len(os.Getenv("STATIC")) != 0 {
+		*STATIC = os.Getenv("STATIC")
+	}
+
+	//workspace
+	if len(os.Getenv("WORKSPACE")) != 0 {
+		*WORKSPACE = os.Getenv("WORKSPACE")
+	}
+
+	//workspace name
+	if len(os.Getenv("WORKSPACENAME")) != 0 {
+		*WORKSPACENAME = os.Getenv("WORKSPACENAME")
+	}
+
+	//workspace logo
+	if len(os.Getenv("WORKSPACELOGO")) != 0 {
+		*WORKSPACELOGO = os.Getenv("WORKSPACELOGO")
+	}
+
+	//invite url
+	if len(os.Getenv("INVITEURL")) != 0 {
+		*INVITEURL = os.Getenv("INVITEURL")
+	}
+
+	//token
+	if len(os.Getenv("TOKEN")) != 0 {
+		*TOKEN = os.Getenv("TOKEN")
+	}
+
 	file, err := os.Open(*CONFIGFILEPATH)
 	if err != nil {
 		log.Println("No config file found", err.Error())
@@ -114,36 +156,20 @@ func loadConfigFile() {
 	if config.Port != 0 {
 		*PORT = config.Port
 	}
-	if len(os.Getenv("PORT")) != 0 {
-		p, err := strconv.Atoi(os.Getenv("PORT"))
-		if err != nil {
-			log.Fatal("Couldn't convert the port to an integer", err.Error())
-		}
-		*PORT = p
-	}
 
 	//static
 	if len(config.Static) != 0 {
 		*STATIC = config.Static
-	}
-	if len(os.Getenv("STATIC")) != 0 {
-		*STATIC = os.Getenv("STATIC")
 	}
 
 	//workspace
 	if len(config.Workspace) != 0 {
 		*WORKSPACE = config.Workspace
 	}
-	if len(os.Getenv("WORKSPACE")) != 0 {
-		*WORKSPACE = os.Getenv("WORKSPACE")
-	}
 
 	//workspace name
 	if len(config.WorkspaceName) != 0 {
 		*WORKSPACENAME = config.WorkspaceName
-	}
-	if len(os.Getenv("WORKSPACENAME")) != 0 {
-		*WORKSPACENAME = os.Getenv("WORKSPACENAME")
 	}
 
 	//Checking whether the workspace subdomain name is empty or not
@@ -155,16 +181,10 @@ func loadConfigFile() {
 	if len(config.WorkspaceLogo) != 0 {
 		*WORKSPACELOGO = config.WorkspaceLogo
 	}
-	if len(os.Getenv("WORKSPACELOGO")) != 0 {
-		*WORKSPACELOGO = os.Getenv("WORKSPACELOGO")
-	}
 
 	//invite url
 	if len(config.InviteURL) != 0 {
 		*INVITEURL = config.InviteURL
-	}
-	if len(os.Getenv("INVITEURL")) != 0 {
-		*INVITEURL = os.Getenv("INVITEURL")
 	}
 
 	//if workspace is not empty we will use the template to set invite url
@@ -178,9 +198,6 @@ func loadConfigFile() {
 	//token
 	if len(config.Token) != 0 {
 		*TOKEN = config.Token
-	}
-	if len(os.Getenv("TOKEN")) != 0 {
-		*TOKEN = os.Getenv("TOKEN")
 	}
 
 	//verifying whether there exist a token

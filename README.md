@@ -1,4 +1,4 @@
-# joinslack https://travis-ci.com/melvinodsa/joinslack.svg?branch=master
+# joinslack ![](https://travis-ci.com/melvinodsa/joinslack.svg?branch=master)
 Automatic slack sign up
 
 ## Installation

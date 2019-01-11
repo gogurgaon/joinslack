@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -88,11 +89,54 @@ func LoadConfig() {
 
 func loadConfigFile() {
 	/*
+	 * Loading the configs from environment variable
+	 * Environment variables get more priority over other methods with deployment in mind
 	 * Opening the config file
 	 * Then we will decode the config file
 	 * If the command line flags are not empty update them with config
 	 */
 	//Loading the config file
+
+	//configuring the variables from  from os environment variables
+	//port
+	if len(os.Getenv("PORT")) != 0 {
+		p, err := strconv.Atoi(os.Getenv("PORT"))
+		if err != nil {
+			log.Fatal("Couldn't convert the port to an integer", err.Error())
+		}
+		*PORT = p
+	}
+
+	//static assets
+	if len(os.Getenv("STATIC")) != 0 {
+		*STATIC = os.Getenv("STATIC")
+	}
+
+	//workspace
+	if len(os.Getenv("WORKSPACE")) != 0 {
+		*WORKSPACE = os.Getenv("WORKSPACE")
+	}
+
+	//workspace name
+	if len(os.Getenv("WORKSPACENAME")) != 0 {
+		*WORKSPACENAME = os.Getenv("WORKSPACENAME")
+	}
+
+	//workspace logo
+	if len(os.Getenv("WORKSPACELOGO")) != 0 {
+		*WORKSPACELOGO = os.Getenv("WORKSPACELOGO")
+	}
+
+	//invite url
+	if len(os.Getenv("INVITEURL")) != 0 {
+		*INVITEURL = os.Getenv("INVITEURL")
+	}
+
+	//token
+	if len(os.Getenv("TOKEN")) != 0 {
+		*TOKEN = os.Getenv("TOKEN")
+	}
+
 	file, err := os.Open(*CONFIGFILEPATH)
 	if err != nil {
 		log.Println("No config file found", err.Error())

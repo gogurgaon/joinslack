@@ -18,7 +18,7 @@ import (
  */
 
 //PORT for the application. One can provide the port through cmd argument flags
-var PORT = flag.Int("port", 9000, "port for the chat application")
+var PORT = flag.Int("port", 80, "port for the chat application")
 
 //STATIC is the static assets directory for the application.
 //By default it is the one specified by the assets directory. If developer want to have
